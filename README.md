@@ -28,3 +28,8 @@ Features:
     - Positive or negative values are accepted
   - Click on one of the distribute with gap options, `X`, `Y`, or `Z`.
 
+
+## Demo
+
+https://user-images.githubusercontent.com/9062786/226111783-fd2bb540-8e4d-4a81-b694-609fbee42259.mov
+
