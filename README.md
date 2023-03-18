@@ -33,3 +33,6 @@ Features:
 
 https://user-images.githubusercontent.com/9062786/226111783-fd2bb540-8e4d-4a81-b694-609fbee42259.mov
 
+## Contributing
+
+Found a bug? Have any feedback? Feel free to open an [issue](https://github.com/Tuily/bl-align-and-distribute/issues)
