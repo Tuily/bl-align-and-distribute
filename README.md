@@ -10,6 +10,8 @@ Features:
 - Distribute objects evenly
 - Distribute objects using a fixed spacing
 
+## How to install
+Check the instalation instructions [here](https://docs.blender.org/manual/en/latest/editors/preferences/addons.html#installing-add-ons)
 
 ## How to use
 
