@@ -11,7 +11,6 @@ PROPS = [
     ('gap', FloatProperty(name='Gap', default=1)),
 ]
 
-
 bl_info = {
     "name": "Align and Distribute Tools",
     "author": "tuily",
@@ -109,22 +108,44 @@ class OBJECT_OP_DistributeWithGapOperator(Operator):
         axis = {'x': 0, 'y': 1, 'z': 2}[self.axis]
         gap = context.scene.gap
         activeObject = bpy.context.active_object
-
         selectedObjects = bpy.context.selected_objects
-        selectedObjects.remove(activeObject)
 
-        if self.axis == 'x':
-            selectedObjects.sort(key=lambda o: o.location.y)
-            selectedObjects.sort(key=lambda o: o.location.z)
-        elif self.axis == 'y':
-            selectedObjects.sort(key=lambda o: o.location.x)
-            selectedObjects.sort(key=lambda o: o.location.z)
-        elif self.axis == 'z':
-            selectedObjects.sort(key=lambda o: o.location.y)
-            selectedObjects.sort(key=lambda o: o.location.x)
+        # sort by axis except the one we are using
+        for i in range(3):
+            if i != axis:
+                def lambdaFn(o): return o.matrix_world.to_translation()[i]
+                selectedObjects.sort(key=lambdaFn)
 
-        for i, o in enumerate(selectedObjects):
-            o.location[axis] = activeObject.location[axis] + ((i+1) * gap)
+        # find active object index
+        selectedObjectNames = [o.name for o in selectedObjects]
+        activeObjectIndex = selectedObjectNames.index(activeObject.name)
+
+        #  split list into two
+        leftPart = selectedObjects[:activeObjectIndex]
+        rightPart = selectedObjects[activeObjectIndex+1:]
+
+        isActiveObjectFirst = activeObjectIndex == 0
+        isActiveObjectLast = activeObjectIndex == len(selectedObjects) - 1
+
+        # active object is not the first or the last
+        if not isActiveObjectFirst and not isActiveObjectLast:
+
+            # leftPart should be reversed so, the first object
+            # is the closest to the active object
+            leftPart.reverse()
+
+            for i, o in enumerate(leftPart):
+                o.location[axis] = activeObject.location[axis] - ((i+1) * gap)
+
+            for i, o in enumerate(rightPart):
+                o.location[axis] = activeObject.location[axis] + ((i+1) * gap)
+
+        else:
+            if isActiveObjectLast:
+                selectedObjects.reverse()
+
+            for i, o in enumerate(selectedObjects):
+                o.location[axis] = activeObject.location[axis] + (i * gap)
 
         return {'FINISHED'}
 
