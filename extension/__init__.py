@@ -39,7 +39,7 @@ class OBJECT_OP_AlignLocationOperator(Operator):
     bl_idname = "object.align_location"
     bl_label = "Align selected objects axis to active object axis"
     bl_description = "Align selected objects axis to active object axis"
-    bl_options = {"REGISTER", "UNDO"}
+    bl_options = {"UNDO"}
 
     axis: bpy.props.StringProperty(name="axis")
 
@@ -67,7 +67,7 @@ class OBJECT_OP_DistributeEvenlyOperator(Operator):
     bl_idname = "object.distribute_evenly"
     bl_label = "Distribute selected objects evenly"
     bl_description = "Distribute selected objects evenly"
-    bl_options = {"REGISTER", "UNDO"}
+    bl_options = {"UNDO"}
 
     axis: bpy.props.StringProperty(name="axis")
 
@@ -111,7 +111,7 @@ class OBJECT_OP_DistributeWithGapOperator(Operator):
     bl_description = (
         "Distribute selected objects with gap\nClick again to invert gap direction"
     )
-    bl_options = {"REGISTER", "UNDO"}
+    bl_options = {"UNDO"}
 
     axis: bpy.props.StringProperty(name="axis")
 
@@ -129,7 +129,6 @@ class OBJECT_OP_DistributeWithGapOperator(Operator):
         Distribute selected objects along the specified axis with a gap.
         The active object remains in place, and the gap can be inverted on subsequent clicks.
         """
-        print("Distributing with gap")
 
         # Axis mapping for Blender's coordinate system
         X, Y, Z = 0, 1, 2
