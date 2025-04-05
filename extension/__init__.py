@@ -23,7 +23,7 @@ bl_info = {
     "name": "Align and Distribute Tools",
     "author": "tuily",
     "version": (0, 3, 4),
-    "blender": (2, 80, 0),
+    "blender": (4, 3, 2),
     "location": "View3D > Sidebar > Item Tab",
     "description": "Align and Distribute Tools",
     "warning": "",
