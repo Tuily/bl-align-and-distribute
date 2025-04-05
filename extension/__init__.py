@@ -7,7 +7,15 @@ from bpy.types import (
 
 
 PROPS = [
-    ("gap", FloatProperty(name="Gap", default=1)),
+    (
+        "gap",
+        FloatProperty(
+            name="Gap",
+            default=1,
+            min=0,
+            description="Gap between objects (must be positive)",
+        ),
+    ),
 ]
 
 
@@ -97,7 +105,9 @@ class OBJECT_OP_DistributeEvenlyOperator(Operator):
 class OBJECT_OP_DistributeWithGapOperator(Operator):
     bl_idname = "object.distribute_with_gap"
     bl_label = "Distribute selected objects with gap"
-    bl_description = "Distribute selected objects with gap"
+    bl_description = (
+        "Distribute selected objects with gap\nClick again to invert gap direction"
+    )
 
     axis: bpy.props.StringProperty(name="axis")
 
@@ -198,7 +208,7 @@ class VIEW3D_PT_AlignAndDistributePanel(Panel):
 
         # distribute with gap operators
         col = layout.column()
-        col.label(text="Distribute with gap (experimental)")
+        col.label(text="Distribute with gap")
 
         for prop_name, _ in PROPS:
             col.prop(context.scene, prop_name)
