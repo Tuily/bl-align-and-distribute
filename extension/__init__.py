@@ -120,26 +120,29 @@ class OBJECT_OP_DistributeWithGapOperator(Operator):
         # Axis mapping for Blender's coordinate system
         X, Y, Z = 0, 1, 2
         axis = {"x": X, "y": Y, "z": Z}[self.axis]
-        reference_axis = {"x": Y, "y": X, "z": X}[self.axis]
 
-        # Reset invert_gap if the axis changes
+        # Check if the axis has changed
         if context.scene.last_used_axis != self.axis:
-            context.scene.invert_gap = False  # Reset invert_gap to default
-            context.scene.last_used_axis = self.axis  # Update the last used axis
+            # Reset invert_gap to False and update the last used axis
+            context.scene.invert_gap = False
+            context.scene.last_used_axis = self.axis
+        else:
+            # Toggle invert_gap for alternating gap directions
+            context.scene.invert_gap = not context.scene.invert_gap
 
-        # Get the active object and selected objects
-        active_object = bpy.context.active_object
-        selected_objects = bpy.context.selected_objects
-        active_object_index = selected_objects.index(active_object)
-
-        # Toggle invert_gap for alternating gap directions
-        context.scene.invert_gap = not context.scene.invert_gap
         invert_gap = context.scene.invert_gap
         gap_sign = -1 if invert_gap else 1
         gap = context.scene.gap * gap_sign
 
-        # Sort objects by their position along the reference axis
-        selected_objects.sort(key=lambda o: o.location[reference_axis])
+        # Get the active object and selected objects
+        active_object = bpy.context.active_object
+        selected_objects = bpy.context.selected_objects
+
+        # Sort objects by their position along the specified axis
+        selected_objects.sort(key=lambda o: o.location[axis])
+
+        # Get the index of the active object in the sorted list
+        active_object_index = selected_objects.index(active_object)
 
         # Debugging: Print active object details
         print(
@@ -147,26 +150,18 @@ class OBJECT_OP_DistributeWithGapOperator(Operator):
         )
 
         # Distribute objects with the specified gap
-        index = 0
-        for obj in selected_objects:
+        for index, obj in enumerate(selected_objects):
             # Skip the active object
             if obj == active_object:
-                index += 1
                 continue
 
             # Calculate the distance from the active object
-            distance_between_active_index = index - active_object_index
+            distance_from_active = index - active_object_index
 
-            # Debugging: Print object distribution details
-            print(
-                f"Object: {obj.name} | Index: {index} | Distance: {distance_between_active_index}"
+            # Calculate the new position based on the gap
+            obj.location[axis] = active_object.location[axis] + (
+                distance_from_active * gap
             )
-
-            # Update the object's position along the specified axis
-            obj.location[axis] = (
-                active_object.location[axis] - distance_between_active_index * gap
-            )
-            index += 1
 
         return {"FINISHED"}
 
