@@ -240,20 +240,29 @@ classes = [
 
 
 def register():
-
     for prop_name, prop_value in PROPS:
-        setattr(bpy.types.Scene, prop_name, prop_value)
+        if not hasattr(
+            bpy.types.Scene, prop_name
+        ):  # Check if the property is already registered
+            setattr(bpy.types.Scene, prop_name, prop_value)
 
     for cls in classes:
-        bpy.utils.register_class(cls)
+        try:
+            bpy.utils.register_class(cls)  # Safely register the class
+        except RuntimeError:
+            print(f"Class {cls.__name__} is already registered.")
 
 
 def unregister():
     for prop_name, _ in PROPS:
-        delattr(bpy.types.Scene, prop_name)
+        if hasattr(bpy.types.Scene, prop_name):  # Check if the property exists
+            delattr(bpy.types.Scene, prop_name)
 
     for cls in classes:
-        bpy.utils.unregister_class(cls)
+        try:
+            bpy.utils.unregister_class(cls)  # Safely unregister the class
+        except RuntimeError:
+            print(f"Class {cls.__name__} was not registered.")
 
 
 if __name__ == "__main__":
