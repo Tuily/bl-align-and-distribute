@@ -39,6 +39,7 @@ class OBJECT_OP_AlignLocationOperator(Operator):
     bl_idname = "object.align_location"
     bl_label = "Align selected objects axis to active object axis"
     bl_description = "Align selected objects axis to active object axis"
+    bl_options = {"REGISTER", "UNDO"}
 
     axis: bpy.props.StringProperty(name="axis")
 
@@ -66,6 +67,7 @@ class OBJECT_OP_DistributeEvenlyOperator(Operator):
     bl_idname = "object.distribute_evenly"
     bl_label = "Distribute selected objects evenly"
     bl_description = "Distribute selected objects evenly"
+    bl_options = {"REGISTER", "UNDO"}
 
     axis: bpy.props.StringProperty(name="axis")
 
@@ -88,6 +90,7 @@ class OBJECT_OP_DistributeEvenlyOperator(Operator):
             return o.location[axis]
 
         maxValue = max(selectedObjects, key=minMaxLambda).location[axis]
+
         minValue = min(selectedObjects, key=minMaxLambda).location[axis]
 
         length = maxValue - minValue
@@ -108,6 +111,7 @@ class OBJECT_OP_DistributeWithGapOperator(Operator):
     bl_description = (
         "Distribute selected objects with gap\nClick again to invert gap direction"
     )
+    bl_options = {"REGISTER", "UNDO"}
 
     axis: bpy.props.StringProperty(name="axis")
 
@@ -246,7 +250,6 @@ def register():
 
 
 def unregister():
-    del bpy.types.Scene.invert_gap
     for prop_name, _ in PROPS:
         delattr(bpy.types.Scene, prop_name)
 
