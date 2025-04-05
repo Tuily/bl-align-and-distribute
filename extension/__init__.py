@@ -11,7 +11,7 @@ PROPS = [
         "gap",
         FloatProperty(
             name="Gap",
-            default=1,
+            default=2,
             min=0,
             description="Gap between objects (must be positive)",
         ),
