@@ -228,18 +228,6 @@ classes = [
 
 def register():
 
-    bpy.types.Scene.invert_gap = BoolProperty(
-        name="Invert Gap",
-        default=False,
-        description="Invert the gap distribution on second click",
-    )
-
-    bpy.types.Scene.last_used_axis = bpy.props.StringProperty(
-        name="Last Used Axis",
-        default="",
-        description="Tracks the last axis used for distributing with gap",
-    )
-
     for prop_name, prop_value in PROPS:
         setattr(bpy.types.Scene, prop_name, prop_value)
 
