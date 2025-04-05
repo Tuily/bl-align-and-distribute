@@ -216,7 +216,7 @@ class VIEW3D_PT_AlignAndDistributePanel(Panel):
 
         # distribute with gap operators
         col = layout.column()
-        col.label(text="Distribute with gap")
+        col.label(text="Distribute with gap (experimental)")
 
         for prop_name, _ in PROPS:
             col.prop(context.scene, prop_name)
