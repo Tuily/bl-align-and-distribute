@@ -121,18 +121,10 @@ class OBJECT_OP_DistributeWithGapOperator(Operator):
         X, Y, Z = 0, 1, 2
         axis = {"x": X, "y": Y, "z": Z}[self.axis]
 
-        # Check if the axis has changed
-        if context.scene.last_used_axis != self.axis:
-            # Reset invert_gap to False and update the last used axis
-            context.scene.invert_gap = False
-            context.scene.last_used_axis = self.axis
-        else:
-            # Toggle invert_gap for alternating gap directions
-            context.scene.invert_gap = not context.scene.invert_gap
+        absolute_gap = abs(context.scene.gap)
 
-        invert_gap = context.scene.invert_gap
-        gap_sign = -1 if invert_gap else 1
-        gap = context.scene.gap * gap_sign
+        # Gap is always negative so when user clicks again it will be positive
+        gap = absolute_gap * -1
 
         # Get the active object and selected objects
         active_object = bpy.context.active_object
@@ -143,11 +135,6 @@ class OBJECT_OP_DistributeWithGapOperator(Operator):
 
         # Get the index of the active object in the sorted list
         active_object_index = selected_objects.index(active_object)
-
-        # Debugging: Print active object details
-        print(
-            f"Active object: {active_object.name} - Axis Value: {active_object.location[axis]}"
-        )
 
         # Distribute objects with the specified gap
         for index, obj in enumerate(selected_objects):
@@ -239,19 +226,12 @@ classes = [
 # Register all operators and panels
 
 
-def update_ui(self, context):
-    for area in context.screen.areas:
-        if area.type == "VIEW_3D":  # Ensure we only update the 3D View UI
-            area.tag_redraw()
-
-
 def register():
 
     bpy.types.Scene.invert_gap = BoolProperty(
         name="Invert Gap",
         default=False,
         description="Invert the gap distribution on second click",
-        update=update_ui,
     )
 
     bpy.types.Scene.last_used_axis = bpy.props.StringProperty(
