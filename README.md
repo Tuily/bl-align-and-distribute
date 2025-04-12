@@ -1,40 +1,40 @@
 # Align and Distribute Tools
 
-<img width="185" alt="ALIGN-AND-DISTRIBUTE-ADD-ON-ACTIVE" src="https://user-images.githubusercontent.com/9062786/226108983-4b76dc59-cf81-4583-88d1-65c9a35ad56c.png">
+<img width="900" alt="ALIGN-AND-DISTRIBUTE-ADD-ON-ACTIVE" src="./media/align-and-distribute-head.jpg"/>
 
-Align and Distribute Tools is a free Blender add-on, as the name says, created to make aligning and distributing objects easier.
+Align and Distribute Tools is a free Blender add-on designed to simplify the process of aligning and distributing objects.
 
-Features:
+## Features
 
-- Align object location
-- Distribute objects evenly
-- Distribute objects using a fixed spacing
+- Align objects to the active object.
+- Distribute objects evenly.
+- Distribute objects using a fixed gap.
 
-## How to install
+## Installation
 
 Check the instalation instructions [here](https://docs.blender.org/manual/en/latest/editors/preferences/addons.html#installing-add-ons)
 
 ## How to use
 
-- Aligning objects
-  - Select at least two objects
-  - Select the [active object](https://docs.blender.org/manual/en/latest/scene_layout/object/selecting.html#selections-and-the-active-object) ( the algorithm will align the objects based on this one).
-  - Click on one of the alignment options `X`, `Y` or `Z`
-- Distribute objects evenly
-  - Select at least three objects
-  - Click on one of the distribute evenly options `X`, `Y` or `Z`
-    - In this mode, the algorithm will distribute the objects evenly between first and the last element
-- Distribute objects using a fixed spacing (experimental)
-  - Select at least two objects
-  - Select the [active object](https://docs.blender.org/manual/en/latest/scene_layout/object/selecting.html#selections-and-the-active-object) ( the algorithm will distribute the objects starting from this one).
-  - Adjust the spacing (gap field)
-    - Positive or negative values are accepted
-  - Click on one of the distribute with gap options, `X`, `Y`, or `Z`.
-  - There are a few edge cases were the order is messed up.
+### Aligning objects
 
-## Known issues
+1. Select at least two objects
+2. Select the [active object](https://docs.blender.org/manual/en/latest/scene_layout/object/selecting.html#selections-and-the-active-object) ( the algorithm will align the objects based on this one).
+3. Click on one of the alignment options `X`, `Y` or `Z`
 
-- Undo does not work on some cases
+### Distributing Objects Evenly
+
+1. Select at least three objects
+2. Click on one of the "Distribute Evenly" options: `X`, `Y`, or `Z`.
+   - In this mode, the algorithm will distribute the objects evenly between first and the last element
+
+### Distributing Objects Using a Fixed Gap
+
+1. Select at least two objects
+2. Select the [active object](https://docs.blender.org/manual/en/latest/scene_layout/object/selecting.html#selections-and-the-active-object) ( the algorithm will distribute the objects starting from this one).
+3. Adjust the gap (only positive values are accepted)
+4. Click on one of the "Distribute with Gap" options: `X`, `Y`, or `Z`.
+   - Clicking again in any of the axes will invert the gap.
 
 ## Demo
 
